@@ -253,9 +253,39 @@ export default function TimeHistoryChart({ data }: TimeHistoryChartProps) {
               border: "1px solid rgb(229, 231, 235)",
               borderRadius: "0.5rem",
             }}
-            className="dark:bg-gray-800 dark:border-gray-700"
             formatter={(value: number) => secondsToTime(value)}
             labelStyle={{ color: "#111827" }}
+            content={({ active, payload, label }) => {
+              if (!active || !payload || !payload.length) return null;
+              
+              const isDark = document.documentElement.classList.contains('dark');
+              
+              return (
+                <div
+                  className="rounded-lg border p-3 shadow-lg"
+                  style={{
+                    backgroundColor: isDark ? "rgb(31, 41, 55)" : "rgb(255, 255, 255)",
+                    borderColor: isDark ? "rgb(55, 65, 81)" : "rgb(229, 231, 235)",
+                  }}
+                >
+                  <p
+                    className="mb-2 font-medium"
+                    style={{ color: isDark ? "rgb(243, 244, 246)" : "#111827" }}
+                  >
+                    {label}
+                  </p>
+                  {payload.map((entry: any, index: number) => (
+                    <p
+                      key={index}
+                      className="text-sm"
+                      style={{ color: entry.color || (isDark ? "rgb(209, 213, 219)" : "#374151") }}
+                    >
+                      {entry.name}: {secondsToTime(entry.value as number)}
+                    </p>
+                  ))}
+                </div>
+              );
+            }}
           />
           <Legend
             wrapperStyle={{ paddingTop: "20px" }}
