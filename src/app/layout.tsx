@@ -6,6 +6,7 @@ import { ThemeProvider } from "@/contexts/ThemeContext";
 import Sidebar from "@/components/layout/Sidebar";
 import Header from "@/components/layout/Header";
 import Backdrop from "@/components/layout/Backdrop";
+import MobileContentWrapper from "@/components/layout/MobileContentWrapper";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -50,17 +51,15 @@ export default function RootLayout({
       >
         <ThemeProvider>
           <SidebarProvider>
-            <div className="min-h-screen xl:flex bg-gray-50 dark:bg-gray-950">
-              <div>
-                <Sidebar />
-                <Backdrop />
-              </div>
-              <div className="flex-1 transition-all duration-300 ease-in-out lg:ml-[90px]">
+            <div className="min-h-screen lg:flex lg:flex-row bg-gray-50 dark:bg-gray-950">
+              <Sidebar />
+              <Backdrop />
+              <MobileContentWrapper>
                 <Header />
                 <div className="p-4 mx-auto max-w-[1536px] md:p-6">
                   {children}
                 </div>
-              </div>
+              </MobileContentWrapper>
             </div>
           </SidebarProvider>
         </ThemeProvider>

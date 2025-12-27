@@ -248,13 +248,6 @@ export default function TimeHistoryChart({ data }: TimeHistoryChartProps) {
             tickFormatter={(value) => secondsToTime(value)}
           />
           <Tooltip
-            contentStyle={{
-              backgroundColor: "rgb(255, 255, 255)",
-              border: "1px solid rgb(229, 231, 235)",
-              borderRadius: "0.5rem",
-            }}
-            formatter={(value: number) => secondsToTime(value)}
-            labelStyle={{ color: "#111827" }}
             content={({ active, payload, label }) => {
               if (!active || !payload || !payload.length) return null;
               
