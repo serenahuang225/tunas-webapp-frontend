@@ -2,6 +2,8 @@
 
 A Next.js-based React dashboard for analyzing USA Swimming meet results, tracking swimmer performance, and optimizing relay team compositions.
 
+View backend code [here](https://github.com/serenahuang225/tunas-webapp-backend) and API [here](https://tunas-webapp-backend-production.up.railway.app/docs)
+
 ## Features
 
 - **Swimmer Analysis**: Search swimmers by USA Swimming ID and view best times and full time history
