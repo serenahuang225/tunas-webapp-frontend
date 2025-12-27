@@ -236,7 +236,7 @@ export default function EventResultsPage() {
           </div>
           <div className="flex items-end">
             <button
-              onClick={handleSearch}
+              onClick={() => handleSearch()}
               disabled={loading}
               className="w-full sm:w-auto rounded-lg bg-brand-500 px-6 py-2.5 text-theme-sm font-medium text-white transition-colors hover:bg-brand-600 focus:outline-none focus:ring-2 focus:ring-brand-500/20 disabled:opacity-50 disabled:cursor-not-allowed"
             >

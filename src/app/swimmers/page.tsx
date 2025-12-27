@@ -25,16 +25,22 @@ export default function SwimmerAnalysisPage() {
 
     setLoading(true);
     setError(null);
-    setBestTimes(null);
-    setTimeHistory(null);
+    // Only clear the data for the tab we're NOT searching
+    if (tab === "best") {
+      setBestTimes(null);
+    } else {
+      setTimeHistory(null);
+    }
 
     try {
       if (tab === "best") {
         const data = await swimmerApi.getBestTimes(id.trim());
         setBestTimes(data);
+        setActiveTab("best"); // Ensure we're on the best tab
       } else {
         const data = await swimmerApi.getTimeHistory(id.trim());
         setTimeHistory(data);
+        setActiveTab("history"); // Ensure we're on the history tab
       }
     } catch (err) {
       if (err instanceof ApiClientError) {
@@ -80,8 +86,13 @@ export default function SwimmerAnalysisPage() {
   }, [searchParams, hasAutoSearched]);
 
   const handleSearch = async (tab?: "best" | "history") => {
+    if (!swimmerId.trim()) {
+      setError("Please enter a swimmer ID");
+      return;
+    }
     setHasAutoSearched(false);
-    await handleSearchWithId(swimmerId, tab || activeTab);
+    const tabToUse = tab || activeTab;
+    await handleSearchWithId(swimmerId, tabToUse);
   };
 
   const formatTime = (timeStr: string) => {
@@ -109,14 +120,14 @@ export default function SwimmerAnalysisPage() {
               type="text"
               value={swimmerId}
               onChange={(e) => setSwimmerId(e.target.value)}
-              onKeyDown={(e) => e.key === "Enter" && handleSearch()}
+              onKeyDown={(e) => e.key === "Enter" && handleSearch(activeTab)}
               placeholder="Enter 14-character USA Swimming ID"
               className="w-full rounded-lg border border-gray-200 bg-white px-4 py-2.5 text-theme-sm text-gray-900 placeholder:text-gray-400 focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-500/20 dark:border-gray-800 dark:bg-white/[0.03] dark:text-white dark:placeholder:text-gray-500"
             />
           </div>
           <div className="flex items-end">
             <button
-              onClick={handleSearch}
+              onClick={() => handleSearch(activeTab)}
               disabled={loading}
               className="w-full sm:w-auto rounded-lg bg-brand-500 px-6 py-2.5 text-theme-sm font-medium text-white transition-colors hover:bg-brand-600 focus:outline-none focus:ring-2 focus:ring-brand-500/20 disabled:opacity-50 disabled:cursor-not-allowed"
             >
