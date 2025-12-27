@@ -43,7 +43,8 @@ frontend/
 ### Prerequisites
 
 - Node.js 18+ and npm
-- Backend API running (default: http://localhost:8000)
+- Backend API (defaults to production: https://tunas-webapp-backend-production.up.railway.app)
+  - For local development, create `.env.local` with `NEXT_PUBLIC_API_URL=http://localhost:8000`
 
 ### Installation
 
@@ -62,13 +63,19 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 ### Environment Variables
 
-Create a `.env.local` file (optional):
+Create a `.env.local` file (optional) to override the API URL:
 
 ```bash
+# For local development with local backend
 NEXT_PUBLIC_API_URL=http://localhost:8000
+
+# Or use the production backend (default)
+# NEXT_PUBLIC_API_URL=https://tunas-webapp-backend-production.up.railway.app
 ```
 
-If not set, defaults to `http://localhost:8000`.
+**Default:** If not set, defaults to `https://tunas-webapp-backend-production.up.railway.app` (production backend).
+
+**Note:** `.env.local` files are gitignored and won't be committed to the repository.
 
 ### Build
 

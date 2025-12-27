@@ -16,7 +16,7 @@ import type {
 } from "@/types/api";
 
 const API_BASE_URL =
-  process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+  process.env.NEXT_PUBLIC_API_URL || "https://tunas-webapp-backend-production.up.railway.app";
 
 class ApiClientError extends Error {
   constructor(
