@@ -1,13 +1,13 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import { swimmerApi } from "@/lib/api-client";
 import type { SwimmerBestTimesResponse, SwimmerTimeHistoryResponse } from "@/types/api";
 import { ApiClientError } from "@/lib/api-client";
 import TimeHistoryChart from "@/components/TimeHistoryChart";
 
-export default function SwimmerAnalysisPage() {
+function SwimmerAnalysisContent() {
   const searchParams = useSearchParams();
   const [swimmerId, setSwimmerId] = useState("");
   const [bestTimes, setBestTimes] = useState<SwimmerBestTimesResponse | null>(null);
@@ -376,6 +376,28 @@ export default function SwimmerAnalysisPage() {
         </div>
       )}
     </div>
+  );
+}
+
+export default function SwimmerAnalysisPage() {
+  return (
+    <Suspense fallback={
+      <div className="space-y-6">
+        <div>
+          <h1 className="text-title-lg font-semibold text-gray-900 dark:text-white">
+            Swimmer Analysis
+          </h1>
+          <p className="mt-2 text-theme-sm text-gray-600 dark:text-gray-400">
+            Search for a swimmer by USA Swimming ID to view their performance data
+          </p>
+        </div>
+        <div className="rounded-xl border border-gray-200 bg-white p-12 text-center shadow-theme-sm dark:border-gray-800 dark:bg-white/[0.03]">
+          <p className="text-theme-sm text-gray-500 dark:text-gray-400">Loading...</p>
+        </div>
+      </div>
+    }>
+      <SwimmerAnalysisContent />
+    </Suspense>
   );
 }
 
